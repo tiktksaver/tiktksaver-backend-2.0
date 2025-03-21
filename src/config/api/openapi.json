@@ -1,0 +1,215 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Tiktksaver API",
+    "version": "2.0.0",
+    "description": "API de coleta de informações de vídeos de tiktok."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local"
+    },
+    {
+      "url": "https://api.tiktksaver.dev/api",
+      "description": "Prod"
+    }
+  ],
+  "tags": [
+    {
+      "name": "logs",
+      "description": "Logs Requests"
+    },
+    {
+      "name": "downloader",
+      "description": "Downloader Requests"
+    }
+  ],
+  "paths": {
+    "/logs/get": {
+      "get": {
+        "tags": [
+          "logs"
+        ],
+        "summary": "Obter logs",
+        "responses": {
+          "200": {
+            "description": "Logs obtidos com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogSchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "[REQUEST ERROR] - Error trying get logs"
+          },
+          "5XX": {
+            "description": "[REQUEST ERROR] - Bad Request"
+          }
+        }
+      }
+    },
+    "/logs/get/format": {
+      "get": {
+        "tags": [
+          "logs"
+        ],
+        "summary": "Obter logs formatados",
+        "responses": {
+          "200": {
+            "description": "Logs formatados obtidos com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogSchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "[REQUEST ERROR] - Error trying get logs"
+          },
+          "5XX": {
+            "description": "[REQUEST ERROR] - Bad Request"
+          }
+        }
+      }
+    },
+    "/download/tiktok": {
+      "get": {
+        "tags": [
+          "downloader"
+        ],
+        "summary": "Obter informações de um vídeo do Tiktok",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "url",
+            "schema": {
+              "type": "string"
+            },
+            "description": "URL do vídeo do Tiktok"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logs formatados obtidos com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TiktokDownloadResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "[REQUEST ERROR] - Error trying get logs"
+          },
+          "5XX": {
+            "description": "[REQUEST ERROR] - Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LogSchema": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "_index": {
+            "type": "string",
+            "default": "logs"
+          },
+          "_score": {
+            "type": "integer",
+            "default": null
+          },
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "default": "0000-000-00T00:00:00.000Z"
+          },
+          "sort": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "TiktokDownloadResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "result": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string"
+                  },
+                  "desc": {
+                    "type": "string"
+                  },
+                  "author": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "nickname": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "statistics": {
+                    "type": "object",
+                    "properties": {
+                      "likeCount": {
+                        "type": "string"
+                      },
+                      "commentCount": {
+                        "type": "string"
+                      },
+                      "shareCount": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "video": {
+                    "type": "string"
+                  },
+                  "music": {
+                    "type": "string"
+                  },
+                  "videoHD": {
+                    "type": "string"
+                  },
+                  "videoWatermark": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
