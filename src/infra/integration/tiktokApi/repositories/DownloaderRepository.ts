@@ -18,6 +18,12 @@ export class DownloaderRepository implements IDownloadRepository {
         const data: any = await this.downloaderClient.getVideoV2(url);
         const complement = await this.downloaderClient.getVideoV3(url);
 
+        const enrichedData = await this.downloaderClient.getVideoV1(url);
+
+        console.log('DATA ==> ', data); // Nesse caso vem pouca informação, vem o necessário para efetuar o download
+        console.log('Complement ==> ', complement); // Complemento para o nome do autor e para marca d'agua do vídeo e download em HD
+        console.log('Tiktok Response ==> ', enrichedData); // Melhor conjunto de dados, vem todas as informações relevantes, porém, precisa de um tratamento de dados para selecionar o que realmente é válido 
+
         data.result.author.name = data.result.author.nickname;
         data.result.author.nickname = complement.result?.author?.nickname;
 
