@@ -13,6 +13,7 @@ export interface IDownloadResult {
     author: IDownloadAuthor;
     statistics: IDownloadStatistics;
     video: string;
+    images: string[];
     music: string;
     videoHD: string;
     videoWatermark: string;
