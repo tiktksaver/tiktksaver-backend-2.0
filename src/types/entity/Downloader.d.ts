@@ -1,32 +1,87 @@
-export interface IDownloadEntity {
-    data: IDownloadData
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type IDownloadEntity = {
+    data: IDownloadData;
 }
 
-export interface IDownloadData {
-    status: string;
-    result: IDownloadResult;
+export type IDownloadData = {
+    status: "success" | "error";
+    message?: string;
+    result?: IDownloadResult;
+    resultNotParsed?: any;
 }
 
-export interface IDownloadResult {
-    type: string;
-    desc: string;
+export type IDownloadResult = {
+    type: "video" | "image";
+    id: string;
+    createTime: number;
+    description: string;
     author: IDownloadAuthor;
     statistics: IDownloadStatistics;
-    video: string;
-    images: string[];
-    music: string;
-    videoHD: string;
-    videoWatermark: string;
+    hashtag: string[];
+    isTurnOffComment: boolean;
+    isADS: boolean;
+    cover?: string[];
+    dynamicCover?: string[];
+    originCover?: string[];
+    video?: IDownloadVideo;
+    images?: string[];
+    music: IDownloadMusic;
 }
 
-export interface IDownloadAuthor {
-    avatar: string;
+
+export type IDownloadAuthor = {
+    uid: number;
+    username: string;
     nickname: string;
-    name: string;
+    signature: string;
+    region: string;
+    avatarThumb: string[];
+    avatarMedium: string[];
+    url: string;
 }
 
-export interface IDownloadStatistics {
-    likeCount: string;
-    commentCount: string;
-    shareCount: string;
+export type IDownloadStatistics = {
+    playCount: number;
+    downloadCount: number;
+    shareCount: number;
+    commentCount: number;
+    diggCount: number;
+    collectCount: number;
+    forwardCount: number;
+    whatsappShareCount: number;
+    loseCount: number;
+    loseCommentCount: number;
+    repostCount: number;
+}
+
+export type IDownloadVideo = {
+    ratio: string;
+    duration: number;
+    playAddr: string[];
+    downloadAddr: string[];
+    cover: string[];
+    dynamicCover: string[];
+    originCover: string[];
+}
+
+export type IDownloadMusic = {
+    id: number;
+    title: string;
+    author: string;
+    album: string;
+    playUrl: string[];
+    coverLarge: string[];
+    coverMedium: string[];
+    coverThumb: string[];
+    duration: number;
+    isCommerceMusic: boolean;
+    isOriginalSound: boolean;
+    isAuthorArtist: boolean;
+}
+
+export type IDownloadResponseParser = {
+    content?: any;
+    statistics?: IDownloadStatistics;
+    author?: IDownloadAuthor;
+    music?: IDownloadMusic;
 }
